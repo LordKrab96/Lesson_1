@@ -135,23 +135,23 @@ student_list = [student1, student2]
 # Создаем список лекторов
 lecturer_list = [lector1, lector2]
 
-
-def student_rating(student_list, course_name):
+print(type(int(student1.average_value())))
+def student_rating(list, course_name):
     sum_all = 0
-    count_all = 1
-    for stud in student_list:
-        if stud.courses_in_progress == [course_name]:
+    count_all = 0
+    for stud in list:
+        if course_name in stud.courses_in_progress:
             sum_all += stud.average_value
             count_all += 1
     average_for_all = sum_all / count_all
     return average_for_all
 
 
-def lecturer_rating(lecturer_list, course_name):
+def lecturer_rating(list, course_name):
     sum_all = 0
-    count_all = 1
-    for lect in lecturer_list:
-        if lect.courses_attached == [course_name]:
+    count_all = 0
+    for lect in list:
+        if course_name in lect.courses_attached:
             sum_all += lect.average_value
             count_all += 1
     average_for_all = sum_all / count_all
