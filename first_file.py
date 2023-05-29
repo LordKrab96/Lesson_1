@@ -4,11 +4,11 @@ class Student:
         self.surname = surname
         self.gender = gender
         self.finished_courses = []
-        self.courses_in_progress = []
+        self.on_courses = []
         self.grades = {}
 
     def grade_lector(self, lector, course, grade):
-        if isinstance(lector, Lecturer) and course in lector.courses_attached and course in self.courses_in_progress:
+        if isinstance(lector, Lecturer) and course in lector.on_courses and course in self.on_courses:
             if course in lector.grades:
                 lector.grades[course] += [grade]
             else:
@@ -30,7 +30,7 @@ class Student:
     def __str__(self):
         return f"Имя: {self.name} \nФамилия {self.surname}\n" \
                f"Средняя оценка за лекции {round(self.average_value(), 1)}\n" \
-               f"Курсы в процессе изучения: {', '.join(self.courses_in_progress)}\n" \
+               f"Курсы в процессе изучения: {', '.join(self.on_courses)}\n" \
                f"Завершенные курсы {', '.join(self.finished_courses)}"
 
     def __il__(self, other):
@@ -44,7 +44,7 @@ class Mentor:
     def __init__(self, name, surname):
         self.name = name
         self.surname = surname
-        self.courses_attached = []
+        self.on_courses = []
 
 
 class Lecturer(Mentor):
@@ -76,7 +76,7 @@ class Lecturer(Mentor):
 
 class Reviewer(Mentor):
     def rate_hw(self, student, course, grade):
-        if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
+        if isinstance(student, Student) and course in self.on_courses and course in student.on_courses:
             if course in student.grades:
                 student.grades[course] += [grade]
             else:
@@ -89,21 +89,21 @@ class Reviewer(Mentor):
 
 
 student1 = Student('Ruoy', 'Eman', 'your_gender')
-student1.courses_in_progress += ['Python', 'Javascript']
+student1.on_courses += ['Python', 'Javascript']
 student1.finished_courses += ["Введение в программирование"]
 
 student2 = Student('Arseniy', 'Lebedev', 'man')
-student2.courses_in_progress += ['Python', 'Java']
+student2.on_courses += ['Python', 'Java']
 student2.finished_courses += ["Git"]
 
 lector1 = Lecturer('Alex', 'Frankson')
-lector1.courses_attached += ['Python', "Javascript"]
+lector1.on_courses += ['Python', "Javascript"]
 
 lector2 = Lecturer('Nina', 'Lisobina')
-lector2.courses_attached += ['Python', "Java"]
+lector2.on_courses += ['Python', "Java"]
 
 cool_reviewer = Reviewer('Some', 'Buddy')
-cool_reviewer.courses_attached += ['Python']
+cool_reviewer.on_courses += ['Python']
 
 cool_reviewer.rate_hw(student1, 'Python', 10)
 cool_reviewer.rate_hw(student1, 'Python', 10)
@@ -135,26 +135,12 @@ student_list = [student1, student2]
 # Создаем список лекторов
 lecturer_list = [lector1, lector2]
 
-print(type(int(student1.average_value())))
-
-
-def student_rating(list, course_name):
+def rating(list, course_name):
     sum_all = 0
     count_all = 0
-    for stud in list:
-        if course_name in stud.courses_in_progress:
-            sum_all += stud.average_value()
-            count_all += 1
-    average_for_all = sum_all / count_all
-    return round(average_for_all, 1)
-
-
-def lecturer_rating(list, course_name):
-    sum_all = 0
-    count_all = 0
-    for lect in list:
-        if course_name in lect.courses_attached:
-            sum_all += lect.average_value()
+    for person in list:
+        if course_name in person.on_courses:
+            sum_all += person.average_value()
             count_all += 1
     average_for_all = sum_all / count_all
     return round(average_for_all, 1)
@@ -173,6 +159,6 @@ print(student1)
 print()
 print(student2)
 print()
-print(f"Средняя оценка для всех студентов по курсу {'Python'}: {student_rating(student_list, 'Python')}")
+print(f"Средняя оценка для всех студентов по курсу {'Python'}: {rating(student_list, 'Python')}")
 print()
-print(f"Средняя оценка для всех лекторов по курсу {'Python'}: {lecturer_rating(lecturer_list, 'Python')}")
+print(f"Средняя оценка для всех лекторов по курсу {'Python'}: {rating(lecturer_list, 'Python')}")
