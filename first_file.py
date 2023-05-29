@@ -136,15 +136,17 @@ student_list = [student1, student2]
 lecturer_list = [lector1, lector2]
 
 print(type(int(student1.average_value())))
+
+
 def student_rating(list, course_name):
     sum_all = 0
     count_all = 0
     for stud in list:
         if course_name in stud.courses_in_progress:
-            sum_all += stud.average_value
+            sum_all += stud.average_value()
             count_all += 1
     average_for_all = sum_all / count_all
-    return average_for_all
+    return round(average_for_all, 1)
 
 
 def lecturer_rating(list, course_name):
@@ -152,10 +154,10 @@ def lecturer_rating(list, course_name):
     count_all = 0
     for lect in list:
         if course_name in lect.courses_attached:
-            sum_all += lect.average_value
+            sum_all += lect.average_value()
             count_all += 1
     average_for_all = sum_all / count_all
-    return average_for_all
+    return round(average_for_all, 1)
 
 
 print(student1.grades)
