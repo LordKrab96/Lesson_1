@@ -37,7 +37,7 @@ class Student:
         if isinstance(other, Student):
             return self.average_value() < other.average_value()
         else:
-            return print("Это не студент")
+            print("Это не студент")
 
 
 class Mentor:
@@ -161,7 +161,8 @@ print()
 print(student2)
 print()
 print("У первого лектора оценки хуже?", lector1 < lector2)
-print("У первого студента оценки хуже?", student1 < student2)
+print()
+print("У первого студента оценки хуже?", student1 < lector2)
 print()
 print(f"Средняя оценка для всех студентов по курсу {'Python'}: {rating(student_list, 'Python')}")
 print()
