@@ -33,11 +33,11 @@ class Student:
                f"Курсы в процессе изучения: {', '.join(self.on_courses)}\n" \
                f"Завершенные курсы {', '.join(self.finished_courses)}"
 
-    def __il__(self, other):
+    def __lt__(self, other):
         if isinstance(other, Student):
-            print("Это не студент")
-            return
-        return self.average_value() < other.average_value()
+            return self.average_value() < other.average_value()
+        else:
+            return print("Это не студент")
 
 
 class Mentor:
@@ -67,11 +67,11 @@ class Lecturer(Mentor):
         return f"Имя: {self.name} \nФамилия {self.surname}\n" \
                f"Средняя оценка за лекции {round(self.average_value(), 1)}"
 
-    def __il__(self, other):
+    def __lt__(self, other):
         if isinstance(other, Lecturer):
+            return self.average_value() < other.average_value()
+        else:
             print("Это не лектор")
-            return
-        return self.average_value() < other.average_value()
 
 
 class Reviewer(Mentor):
@@ -135,6 +135,7 @@ student_list = [student1, student2]
 # Создаем список лекторов
 lecturer_list = [lector1, lector2]
 
+
 def rating(list, course_name):
     sum_all = 0
     count_all = 0
@@ -158,6 +159,9 @@ print()
 print(student1)
 print()
 print(student2)
+print()
+print("У первого лектора оценки хуже?", lector1 < lector2)
+print("У первого студента оценки хуже?", student1 < student2)
 print()
 print(f"Средняя оценка для всех студентов по курсу {'Python'}: {rating(student_list, 'Python')}")
 print()
